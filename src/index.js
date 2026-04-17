@@ -1,15 +1,14 @@
 /**
  * @uniweb/fetchers — reusable helpers for Uniweb foundation data fetchers.
  *
- * This package is seeded empty. See the data-transport architecture plan
- * (kb/framework/plans/data-transport-architecture.md in the monorepo)
- * for the scope and the order in which helpers should land.
+ * Current surface:
  *
- * Intended initial surface:
+ *   createStaticJsonFetcher({ basePath })  — plain URL GET + JSON parse,
+ *                                            lifted from the framework runtime.
+ *   withAuth(fetcher, tokenProvider)       — inject Authorization headers.
  *
- *   createStaticJsonFetcher({ basePath })  — lifted from @uniweb/runtime
- *   withAuth(fetcher, tokenProvider)       — auth-header wrapper
- *
- * More helpers (withRetry, withTimeout, composeFetchers, etc.) land only
- * when a real foundation exercises them. No speculation.
+ * More helpers land when real foundations exercise them. No speculation.
  */
+
+export { createStaticJsonFetcher } from './static-json.js'
+export { withAuth } from './with-auth.js'
