@@ -1,17 +1,25 @@
 # @uniweb/fetchers
 
-Reusable helpers for building Uniweb foundation data fetchers. Primitives for composition (`withAuth`, `withRetry`, `composeFetchers`, ...) and complete fetchers (`createStaticJsonFetcher`, `createHttpFetcher`, ...). Pure ESM, zero runtime dependencies, tree-shakeable.
+Middleware primitives for building Uniweb foundation data fetchers. Pure ESM, zero runtime dependencies, tree-shakeable.
 
 ## Scope
 
-A foundation declares a data fetcher in its `foundation.js` to own transport for the sites that use it (authentication, base URLs, response envelopes, retries). The fetcher contract is small — `(request, ctx) → Promise<{ data, error?, meta? }>` — and a foundation can write one from scratch. This package exists so most foundations don't have to.
+A foundation declares a data fetcher in its `foundation.js` to own transport for the sites that use it — authentication, base URLs, response envelopes, retries. The fetcher contract is small — `(request, ctx) → Promise<{ data, error?, meta? }>` — and a foundation can write one from scratch. This package exists so most foundations don't have to reimplement the cross-cutting middleware.
 
-Two layers:
+Current surface:
 
-- **Primitives** — small composition utilities that wrap a fetcher with cross-cutting behavior. `withAuth`, `withRetry`, `withTimeout`, `withTransform`, `composeFetchers`, `parseEnvelope`, `buildQueryString`.
-- **Complete fetchers** — ready-made implementations for common patterns. `createStaticJsonFetcher` (the framework default), `createHttpFetcher` (generic REST).
+- `withAuth(fetcher, tokenProvider)` — inject `Authorization` headers.
 
-The package is kept small and focused by design. New helpers land when a real foundation asks for them, not speculatively. The Uniweb framework itself never imports this package — it's for foundation authors.
+More primitives (`withRetry`, `withTimeout`, `composeFetchers`, `parseEnvelope`, `buildQueryString`, …) land when a real foundation exercises them.
+
+## What this package is *not*
+
+It isn't a grab bag of complete fetchers. There is no "static JSON" fetcher here, and there shouldn't be. Two reasons:
+
+1. Sites that want default-JSON behavior just don't declare a foundation fetcher — the runtime ships one internally and the dispatcher falls back to it. Importing a copy into the foundation bundle would duplicate code that already runs.
+2. Foundations that need a custom fetcher almost always hit a real API — static JSON isn't the pattern to reuse. They write `resolve()` against `fetch()` and wrap it with middleware from this package.
+
+The framework itself never imports this package. It's foundation-facing only.
 
 ## Install
 
@@ -21,7 +29,7 @@ pnpm add @uniweb/fetchers
 
 ## Conventions
 
-ESM only. No build step. No runtime dependencies. Node ≥ 20.19. Matches the rest of the `@uniweb/*` framework: no semicolons, single quotes, 4-space indent.
+ESM only. No build step. No runtime dependencies. Node ≥ 20.19. Matches the rest of the `@uniweb/*` framework (no semicolons, single quotes).
 
 ## Status
 
