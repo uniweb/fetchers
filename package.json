@@ -1,0 +1,39 @@
+{
+    "name": "@uniweb/fetchers",
+    "version": "0.1.0",
+    "description": "Reusable helpers for building Uniweb foundation data fetchers. Primitives (withAuth, withRetry, composeFetchers) and complete fetchers (createStaticJsonFetcher, createHttpFetcher). Pure ESM, zero runtime dependencies, tree-shakeable.",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js"
+    },
+    "files": [
+        "src"
+    ],
+    "keywords": [
+        "uniweb",
+        "fetcher",
+        "data",
+        "transport",
+        "cca"
+    ],
+    "author": "Proximify",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/uniweb/fetchers.git"
+    },
+    "homepage": "https://github.com/uniweb/fetchers#readme",
+    "bugs": {
+        "url": "https://github.com/uniweb/fetchers/issues"
+    },
+    "engines": {
+        "node": ">=20.19"
+    },
+    "scripts": {
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "devDependencies": {
+        "vitest": "^2.0.0"
+    }
+}
