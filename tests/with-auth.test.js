@@ -78,17 +78,15 @@ describe('withAuth', () => {
         )
     })
 
-    it('preserves cacheKey / prerenderable / expectedFields from inner', () => {
+    it('preserves cacheKey / prerenderable from inner', () => {
         const inner = {
             resolve: vi.fn(),
             cacheKey: (req) => `ck:${req.schema}`,
             prerenderable: false,
-            expectedFields: ['schema', 'where'],
         }
         const wrapped = withAuth(inner, 'abc')
 
         expect(wrapped.prerenderable).toBe(false)
-        expect(wrapped.expectedFields).toEqual(['schema', 'where'])
         expect(wrapped.cacheKey({ schema: 'members' })).toBe('ck:members')
     })
 

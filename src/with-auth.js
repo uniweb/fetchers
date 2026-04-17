@@ -54,9 +54,6 @@ export function withAuth(fetcher, tokenProvider, { scheme = 'Bearer' } = {}) {
     if (fetcher.prerenderable !== undefined) {
         wrapped.prerenderable = fetcher.prerenderable
     }
-    if (Array.isArray(fetcher.expectedFields)) {
-        wrapped.expectedFields = fetcher.expectedFields
-    }
 
     return wrapped
 }
